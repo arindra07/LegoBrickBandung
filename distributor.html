@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kemitraan Distributor - LEGO BRICK BANDUNG</title>
+  
+  <!-- Favicon Logo -->
+  <link rel="icon" type="image/png" href="logo.png">
+</head>
+<body>
+
+<div class="distributor-container">
+  <style>
+    .distributor-container {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #333;
+      padding: 10px;
+    }
+
+    /* Banner Distributor dengan Warna Oranye #FF9D50 */
+    .distributor-hero {
+      background-color: #FF9D50;
+      color: white;
+      padding: 30px 20px;
+      border-radius: 12px;
+      text-align: center;
+      box-shadow: 0 4px 15px rgba(255, 157, 80, 0.4);
+      margin-bottom: 20px;
+    }
+
+    .distributor-hero h1 {
+      margin: 0 0 10px 0;
+      font-size: 26px;
+      font-weight: bold;
+    }
+
+    .distributor-hero p {
+      margin: 0;
+      font-size: 14px;
+      opacity: 0.95;
+    }
+
+    /* Kotak Informasi Sponsor LEGO & Non-LEGO */
+    .official-supply-box {
+      background-color: #fff9e6;
+      border: 2px solid #ffcc00;
+      border-radius: 10px;
+      padding: 15px 20px;
+      margin-bottom: 25px;
+      display: flex;
+      align-items: flex-start;
+      gap: 15px;
+    }
+
+    .official-supply-icon {
+      font-size: 32px;
+      line-height: 1;
+    }
+
+    .official-supply-text {
+      font-size: 13px;
+      color: #444;
+      line-height: 1.5;
+    }
+
+    .official-supply-text strong {
+      color: #d32f2f;
+    }
+
+    .official-lego-link {
+      color: #0275d8;
+      font-weight: bold;
+      text-decoration: underline;
+    }
+
+    .official-lego-link:hover {
+      color: #014c8c;
+    }
+
+    .section-title {
+      font-size: 18px;
+      font-weight: bold;
+      margin: 20px 0 15px 0;
+      color: #1e3c72;
+      border-left: 4px solid #FF9D50;
+      padding-left: 10px;
+    }
+
+    /* Grid Keuntungan Distributor */
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin-bottom: 25px;
+    }
+
+    .benefit-card {
+      background: #f9f9f9;
+      border: 1px solid #e0e0e0;
+      border-radius: 10px;
+      padding: 15px;
+      text-align: center;
+    }
+
+    .benefit-icon {
+      font-size: 30px;
+      margin-bottom: 8px;
+    }
+
+    .benefit-card h3 {
+      margin: 5px 0;
+      font-size: 15px;
+      color: #FF9D50;
+    }
+
+    .benefit-card p {
+      margin: 0;
+      font-size: 12px;
+      color: #666;
+    }
+
+    /* Paket Grosir */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 15px;
+      margin-bottom: 25px;
+    }
+
+    .pricing-card {
+      background: #ffffff;
+      border: 2px solid #e0e0e0;
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+      transition: transform 0.2s, border-color 0.3s;
+    }
+
+    /* Animation Keyframes Efek Berkedut (Shake/Twitch) */
+    @keyframes kedut {
+      0% { transform: rotate(0deg) scale(1.02); }
+      20% { transform: rotate(-1.5deg) scale(1.02); }
+      40% { transform: rotate(1.5deg) scale(1.02); }
+      60% { transform: rotate(-1deg) scale(1.02); }
+      80% { transform: rotate(1deg) scale(1.02); }
+      100% { transform: rotate(0deg) scale(1.02); }
+    }
+
+    /* Efek saat Cursor Diarahin (Hover) */
+    .pricing-card:hover {
+      border-color: #FF9D50;
+      animation: kedut 0.35s ease-in-out infinite alternate;
+      box-shadow: 0 8px 20px rgba(255, 157, 80, 0.3);
+    }
+
+    .pricing-card h3 {
+      margin: 0 0 10px 0;
+      color: #333;
+    }
+
+    .pricing-card .price {
+      font-size: 20px;
+      font-weight: bold;
+      color: #FF9D50;
+      margin-bottom: 15px;
+    }
+
+    .pricing-card ul {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 15px 0;
+      font-size: 13px;
+      color: #555;
+      text-align: left;
+    }
+
+    .pricing-card ul li {
+      margin-bottom: 8px;
+      padding-left: 18px;
+      position: relative;
+    }
+
+    .pricing-card ul li::before {
+      content: "✔";
+      position: absolute;
+      left: 0;
+      color: #4caf50;
+    }
+
+    /* Form Pendaftaran Distributor */
+    .form-box {
+      background: #ffffff;
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    }
+
+    .form-group {
+      margin-bottom: 12px;
+      text-align: left;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      color: #555;
+      margin-bottom: 4px;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 8px 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 13px;
+      box-sizing: border-box;
+      font-family: inherit;
+    }
+
+    .btn-submit {
+      width: 100%;
+      background-color: #FF9D50;
+      color: white;
+      border: none;
+      padding: 10px;
+      border-radius: 6px;
+      font-weight: bold;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .btn-submit:hover {
+      background-color: #e5853c;
+    }
+  </style>
+
+  <!-- Banner Utama Distributor -->
+  <div class="distributor-hero">
+    <h1>Program Kemitraan Distributor 🤝</h1>
+    <p>Bergabunglah menjadi mitra resmi Brick Bandung dan dapatkan harga grosir terbaik dengan margin keuntungan tinggi!</p>
+  </div>
+
+  <!-- Keterangan Sponsor LEGO & Variasi Brick -->
+  <div class="official-supply-box">
+    <div class="official-supply-icon">🧱</div>
+    <div class="official-supply-text">
+      <strong>Dukungan Sponsor & Produk Resmi:</strong> Toko kami didukung dan disponsori secara resmi oleh jaringan distributor <strong>LEGO® System A/S</strong> untuk menghadirkan koleksi LEGO® Original berkualitas. Untuk melihat katalog global LEGO, kunjungi <a href="https://www.lego.com" target="_blank" class="official-lego-link">Website Resmi LEGO (www.lego.com)</a>.<br><br>
+      <em>Catatan Tambahan: Selain koleksi LEGO® asli, kami juga menyediakan beragam pilihan set brick alternatif dari produsen lain yang kompatibel untuk memberi variasi harga dan model yang lebih fleksibel bagi konsumen Anda.</em>
+    </div>
+  </div>
+
+  <!-- Keuntungan -->
+  <div class="section-title">Keuntungan Menjadi Distributor</div>
+  <div class="benefits-grid">
+    <div class="benefit-card">
+      <div class="benefit-icon">💰</div>
+      <h3>Diskon Khusus</h3>
+      <p>Potongan harga hingga 30% dari harga eceran resmi.</p>
+    </div>
+    <div class="benefit-card">
+      <div class="benefit-icon">🚚</div>
+      <h3>Prioritas Stok</h3>
+      <p>Akses langsung ke set Lego edisi terbatas & rilis terbaru.</p>
+    </div>
+    <div class="benefit-card">
+      <div class="benefit-icon">📢</div>
+      <h3>Dukungan Pemasaran</h3>
+      <p>Mendapatkan materi promosi resmi, spanduk, dan katalog digital.</p>
+    </div>
+  </div>
+
+  <!-- Pilihan Paket Reseller/Distributor -->
+  <div class="section-title">Pilihan Paket Kemitraan</div>
+  <div class="pricing-grid">
+    <div class="pricing-card">
+      <h3>Paket Starter</h3>
+      <div class="price">Min. Order Rp5.000.000</div>
+      <ul>
+        <li>Diskon Produk 15%</li>
+        <li>Campur Variasi Set Lego & Alternative Brick</li>
+        <li>Spanduk Toko Digital</li>
+      </ul>
+    </div>
+    <div class="pricing-card">
+      <h3>Paket Utama</h3>
+      <div class="price">Min. Order Rp15.000.000</div>
+      <ul>
+        <li>Diskon Produk 25%</li>
+        <li>Prioritas Pengiriman</li>
+        <li>Sertifikat Reseller Resmi</li>
+        <li>Dukungan Banner Promosi</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Form Pendaftaran -->
+  <div class="section-title">Formulir Pendaftaran Distributor</div>
+  <div class="form-box">
+    <form onsubmit="submitDistributor(event)">
+      <div class="form-group">
+        <label for="nama-toko">Nama Toko / Usaha *</label>
+        <input type="text" id="nama-toko" placeholder="Contoh: Toko Mainan Jaya" required>
+      </div>
+
+      <div class="form-group">
+        <label for="nama-pemilik">Nama Pemilik *</label>
+        <input type="text" id="nama-pemilik" placeholder="Nama lengkap Anda" required>
+      </div>
+
+      <div class="form-group">
+        <label for="nomor-hp">Nomor WhatsApp *</label>
+        <input type="tel" id="nomor-hp" placeholder="Contoh: 081234567890" required>
+      </div>
+
+      <div class="form-group">
+        <label for="paket-mitra">Pilihan Paket *</label>
+        <select id="paket-mitra" required>
+          <option value="" disabled selected>-- Pilih Paket Kemitraan --</option>
+          <option value="Starter">Paket Starter (Min. Rp5 Juta)</option>
+          <option value="Utama">Paket Utama (Min. Rp15 Juta)</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="alamat-toko">Alamat Lengkap Toko / Usaha *</label>
+        <textarea id="alamat-toko" rows="3" placeholder="Masukkan alamat usaha Anda..." required></textarea>
+      </div>
+
+      <button type="submit" class="btn-submit">Kirim Pengajuan Kemitraan</button>
+    </form>
+  </div>
+
+  <script>
+    function submitDistributor(event) {
+      event.preventDefault();
+      const toko = document.getElementById('nama-toko').value;
+      const pemilik = document.getElementById('nama-pemilik').value;
+      const paket = document.getElementById('paket-mitra').value;
+
+      alert(`✅ Pengajuan Kemitraan Terkirim!\n\nNama Toko: ${toko}\nPemilik: ${pemilik}\nPaket: ${paket}\n\nTim kami akan menghubungi Anda via WhatsApp dalam 1x24 jam.`);
+      event.target.reset();
+    }
+  </script>
+</div>
+
+</body>
+</html>

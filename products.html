@@ -1,0 +1,740 @@
+<div class="products-container">
+  <style>
+    .products-container {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      padding: 10px;
+      position: relative;
+    }
+
+    /* Top Bar Header dengan Tombol Keranjang Melayang */
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      position: relative;
+    }
+
+    .products-header {
+      text-align: left;
+    }
+
+    .products-header h1 {
+      color: #ff5500;
+      margin: 0 0 5px 0;
+      font-size: 24px;
+    }
+
+    .products-header p {
+      color: #666;
+      font-size: 14px;
+      margin: 0;
+    }
+
+    /* Tombol Ikon Keranjang */
+    .cart-icon-btn {
+      position: relative;
+      background-color: #ffffff;
+      border: 2px solid #ff5500;
+      border-radius: 50%;
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      transition: all 0.2s ease;
+    }
+
+    .cart-icon-btn:hover {
+      background-color: #ff5500;
+      transform: scale(1.05);
+    }
+
+    .cart-icon-btn:hover svg {
+      fill: #ffffff;
+    }
+
+    .cart-icon-btn svg {
+      width: 24px;
+      height: 24px;
+      fill: #ff5500;
+      transition: fill 0.2s ease;
+    }
+
+    /* Badge Jumlah Barang */
+    .cart-badge {
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      background-color: #d32f2f;
+      color: #ffffff;
+      font-size: 11px;
+      font-weight: bold;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+
+    /* Filter Buttons Styling */
+    .filter-container {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 25px;
+      flex-wrap: wrap;
+    }
+
+    .filter-btn {
+      background-color: #f1f1f1;
+      border: 1px solid #ddd;
+      color: #444;
+      padding: 8px 18px;
+      border-radius: 20px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 13px;
+    }
+
+    .filter-btn:hover,
+    .filter-btn.active {
+      background-color: #ff5500;
+      color: #ffffff;
+      border-color: #ff5500;
+      box-shadow: 0 3px 8px rgba(255, 85, 0, 0.3);
+    }
+
+    /* Grid layout untuk produk */
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+    }
+
+    /* Card Produk */
+    .product-card {
+      background: #ffffff;
+      border: 1px solid #e0e0e0;
+      border-radius: 12px;
+      padding: 15px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+      transition: all 0.3s ease;
+    }
+
+    .product-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(255, 85, 0, 0.15);
+      border-color: #ff9900;
+    }
+
+    .product-card.hide {
+      display: none;
+    }
+
+    .product-image-box {
+      width: 100%;
+      height: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 12px;
+      overflow: hidden;
+      border-radius: 8px;
+      background-color: #fafafa;
+    }
+
+    .product-image-box img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
+
+    .product-badge {
+      display: inline-block;
+      background: #ffe8cc;
+      color: #d34800;
+      font-size: 11px;
+      font-weight: bold;
+      padding: 3px 8px;
+      border-radius: 4px;
+      margin-bottom: 8px;
+      align-self: center;
+    }
+
+    .product-title {
+      font-size: 16px;
+      font-weight: bold;
+      color: #333;
+      margin: 0 0 10px 0;
+    }
+
+    .product-price {
+      font-size: 18px;
+      font-weight: bold;
+      color: #ff5500;
+      margin-bottom: 15px;
+    }
+
+    .btn-buy {
+      background-color: #ff5500;
+      color: #ffffff;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+    }
+
+    .btn-buy:hover {
+      background-color: #d34800;
+    }
+
+    .btn-buy:active {
+      transform: scale(0.96);
+    }
+
+    /* Modal Keranjang Belanja */
+    .cart-modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 2000;
+    }
+
+    .cart-modal-overlay.active {
+      display: flex;
+    }
+
+    .cart-modal {
+      background: #fff;
+      width: 90%;
+      max-width: 480px;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+      max-height: 85vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .cart-modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 10px;
+      margin-bottom: 15px;
+    }
+
+    .cart-modal-header h2 {
+      margin: 0;
+      color: #333;
+      font-size: 18px;
+    }
+
+    .close-modal-btn {
+      background: none;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+      color: #888;
+    }
+
+    .cart-modal-body {
+      overflow-y: auto;
+      flex-grow: 1;
+      padding-right: 5px;
+    }
+
+    .cart-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid #f9f9f9;
+    }
+
+    .cart-item-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .cart-item-info img {
+      width: 45px;
+      height: 45px;
+      object-fit: contain;
+      border-radius: 6px;
+      border: 1px solid #eee;
+    }
+
+    .cart-item-details strong {
+      display: block;
+      font-size: 13px;
+      color: #333;
+    }
+
+    .cart-item-details span {
+      font-size: 12px;
+      color: #ff5500;
+      font-weight: bold;
+    }
+
+    .cart-item-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .cart-item-actions button {
+      background: #eee;
+      border: none;
+      width: 24px;
+      height: 24px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .cart-item-actions button:hover {
+      background: #ddd;
+    }
+
+    /* Section Formulir Pengiriman */
+    .checkout-form {
+      margin-top: 20px;
+      border-top: 2px dashed #eee;
+      padding-top: 15px;
+    }
+
+    .checkout-form h3 {
+      font-size: 15px;
+      color: #333;
+      margin: 0 0 12px 0;
+    }
+
+    .form-group {
+      margin-bottom: 12px;
+      text-align: left;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      color: #555;
+      margin-bottom: 4px;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      padding: 8px 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 13px;
+      box-sizing: border-box;
+      font-family: inherit;
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      height: 60px;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+      border-color: #ff5500;
+      outline: none;
+    }
+
+    .cart-footer {
+      border-top: 1px solid #eee;
+      padding-top: 15px;
+      margin-top: 15px;
+    }
+
+    .cart-total {
+      display: flex;
+      justify-content: space-between;
+      font-size: 16px;
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+
+    .cart-footer-btns {
+      display: flex;
+      gap: 10px;
+    }
+
+    .btn-clear {
+      background: #f44336;
+      color: #fff;
+      border: none;
+      padding: 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      flex: 1;
+      font-weight: bold;
+    }
+
+    .btn-checkout {
+      background: #4caf50;
+      color: #fff;
+      border: none;
+      padding: 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      flex: 2;
+      font-weight: bold;
+    }
+
+    /* Styling Toast Notifikasi */
+    .toast-notification {
+      position: fixed;
+      bottom: -80px;
+      right: 20px;
+      background-color: #2e7d32;
+      color: #ffffff;
+      padding: 12px 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+      font-weight: 500;
+      z-index: 3000;
+      transition: bottom 0.4s ease-in-out, opacity 0.4s ease-in-out;
+      opacity: 0;
+    }
+
+    .toast-notification.show {
+      bottom: 20px;
+      opacity: 1;
+    }
+  </style>
+
+  <!-- Top Bar: Judul dan Tombol Keranjang -->
+  <div class="top-bar">
+    <div class="products-header">
+      <h1>Katalog Produk Lego 🧩</h1>
+      <p>Temukan set Lego impianmu berdasarkan kategori favorit!</p>
+    </div>
+    
+    <!-- Tombol Ikon Keranjang SVG -->
+    <button class="cart-icon-btn" onclick="toggleCartModal()" title="Buka Keranjang">
+      <svg viewBox="0 0 24 24">
+        <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/>
+      </svg>
+      <span id="cart-badge" class="cart-badge">0</span>
+    </button>
+  </div>
+
+  <!-- Tombol Filter -->
+  <div class="filter-container">
+    <button class="filter-btn active" onclick="filterProducts('all', this)">Semua</button>
+    <button class="filter-btn" onclick="filterProducts('starwars', this)">Star Wars</button>
+    <button class="filter-btn" onclick="filterProducts('f1', this)">F1</button>
+    <button class="filter-btn" onclick="filterProducts('city', this)">City</button>
+    <button class="filter-btn" onclick="filterProducts('ninjago', this)">Ninjago</button>
+  </div>
+
+  <!-- Grid Produk -->
+  <div class="products-grid">
+    <!-- Star Wars -->
+    <div class="product-card" data-category="starwars">
+      <div class="product-image-box">
+        <img src="img/Chewbacca.jpg" alt="LEGO Star Wars Chewbacca">
+      </div>
+      <span class="product-badge">Star Wars</span>
+      <h3 class="product-title">LEGO Star Wars Chewbacca</h3>
+      <div class="product-price">Rp499.999</div>
+      <button class="btn-buy" onclick="addToCart('LEGO Star Wars Chewbacca', 499999, 'img/Chewbacca.jpg')">Tambah ke Keranjang</button>
+    </div>
+
+    <div class="product-card" data-category="starwars">
+      <div class="product-image-box">
+        <img src="img/Death Star.jpg" alt="LEGO Star Wars Death Star">
+      </div>
+      <span class="product-badge">Star Wars</span>
+      <h3 class="product-title">LEGO Star Wars Death Star</h3>
+      <div class="product-price">Rp1.999.000</div>
+      <button class="btn-buy" onclick="addToCart('LEGO Star Wars Death Star', 1999999, 'img/Death Star.jpg')">Tambah ke Keranjang</button>
+    </div>
+
+    <div class="product-card" data-category="starwars">
+      <div class="product-image-box">
+        <img src="img/Star Wars AT-AT.jpg" alt="LEGO Star Wars AT-AT">
+      </div>
+      <span class="product-badge">Star Wars</span>
+      <h3 class="product-title">LEGO Star Wars AT-AT Walker</h3>
+      <div class="product-price">Rp2.499.000</div>
+      <button class="btn-buy" onclick="addToCart('LEGO Star Wars AT-AT Walker', 2499999, 'img/Star Wars AT-AT.jpg')">Tambah ke Keranjang</button>
+    </div>
+
+    <!-- F1 Series -->
+    <div class="product-card" data-category="f1">
+      <div class="product-image-box">
+        <img src="img/McLaren F1 Technic.jpg" alt="LEGO Technic McLaren F1">
+      </div>
+      <span class="product-badge">F1 Series</span>
+      <h3 class="product-title">LEGO Technic McLaren F1</h3>
+      <div class="product-price">Rp3.299.000</div>
+      <button class="btn-buy" onclick="addToCart('LEGO Technic McLaren F1', 3299999, 'img/McLaren F1 Technic.jpg')">Tambah ke Keranjang</button>
+    </div>
+
+    <!-- City Series -->
+    <div class="product-card" data-category="city">
+      <div class="product-image-box">
+        <img src="img/lego police.jpg" alt="LEGO City Police Car">
+      </div>
+      <span class="product-badge">City</span>
+      <h3 class="product-title">LEGO City Police Car</h3>
+      <div class="product-price">Rp189.000</div>
+      <button class="btn-buy" onclick="addToCart('LEGO City Police Car', 189000, 'img/lego police.jpg')">Tambah ke Keranjang</button>
+    </div>
+
+    <!-- Ninjago Series -->
+    <div class="product-card" data-category="ninjago">
+      <div class="product-image-box">
+        <img src="img/kaimech.jpg" alt="LEGO Ninjago Kai's Mech">
+      </div>
+      <span class="product-badge">Ninjago</span>
+      <h3 class="product-title">LEGO Ninjago Kai's Mech</h3>
+      <div class="product-price">Rp549.000</div>
+      <button class="btn-buy" onclick="addToCart('LEGO Ninjago Kai\'s Mech', 349000, 'img/kaimech.jpg')">Tambah ke Keranjang</button>
+    </div>
+  </div>
+
+  <!-- Pop-up Modal Keranjang Belanja & Formulir -->
+  <div id="cart-modal" class="cart-modal-overlay" onclick="closeCartOnOverlay(event)">
+    <div class="cart-modal">
+      <div class="cart-modal-header">
+        <h2>🛒 Keranjang Belanja Anda</h2>
+        <button class="close-modal-btn" onclick="toggleCartModal()">&times;</button>
+      </div>
+
+      <div class="cart-modal-body">
+        <div id="cart-items-list">
+          <!-- Item keranjang di-render via JavaScript -->
+        </div>
+
+        <!-- Formulir Data Pengiriman & Pembayaran -->
+        <form id="checkout-form-element" class="checkout-form" onsubmit="processCheckout(event)">
+          <h3>📋 Informasi Pengiriman & Pembayaran</h3>
+
+          <div class="form-group">
+            <label for="cust-name">Nama Lengkap *</label>
+            <input type="text" id="cust-name" placeholder="Masukkan nama Anda" required>
+          </div>
+
+          <div class="form-group">
+            <label for="cust-address">Alamat Lengkap *</label>
+            <textarea id="cust-address" placeholder="Masukkan alamat pengiriman lengkap..." required></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="cust-notes">Catatan Pesanan (Opsional)</label>
+            <input type="text" id="cust-notes" placeholder="Contoh: Titipkan di satpam / Bubble wrap tebal">
+          </div>
+
+          <div class="form-group">
+            <label for="cust-payment">Metode Pembayaran *</label>
+            <select id="cust-payment" required>
+              <option value="" disabled selected>-- Pilih Metode Pembayaran --</option>
+              <option value="Transfer Bank (BCA)">Transfer Bank (BCA)</option>
+              <option value="Transfer Bank (Mandiri)">Transfer Bank (Mandiri)</option>
+              <option value="E-Wallet (Gopay/OVO/Dana)">E-Wallet (GoPay / OVO / Dana)</option>
+              <option value="COD (Bayar di Tempat)">COD (Bayar di Tempat)</option>
+            </select>
+          </div>
+        </form>
+      </div>
+
+      <div class="cart-footer">
+        <div class="cart-total">
+          <span>Total:</span>
+          <span id="cart-total-price">Rp0</span>
+        </div>
+        <div class="cart-footer-btns">
+          <button class="btn-clear" onclick="clearCart()">Kosongkan</button>
+          <button class="btn-checkout" onclick="triggerFormSubmit()">Checkout</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Container Notifikasi Toast -->
+  <div id="toast" class="toast-notification">
+    <span class="toast-icon">🛒</span>
+    <span id="toast-message">Produk berhasil ditambahkan!</span>
+  </div>
+
+  <!-- JavaScript Logika -->
+  <script>
+    function formatRupiah(number) {
+      return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(number);
+    }
+
+    function filterProducts(category, btnElement) {
+      const buttons = document.querySelectorAll('.filter-btn');
+      buttons.forEach(btn => btn.classList.remove('active'));
+      btnElement.classList.add('active');
+
+      const cards = document.querySelectorAll('.product-card');
+      cards.forEach(card => {
+        if (category === 'all' || card.getAttribute('data-category') === category) {
+          card.classList.remove('hide');
+        } else {
+          card.classList.add('hide');
+        }
+      });
+    }
+
+    function addToCart(name, price, image) {
+      let cart = JSON.parse(localStorage.getItem('cart')) || [];
+      let existingProduct = cart.find(item => item.name === name);
+
+      if (existingProduct) {
+        existingProduct.quantity += 1;
+      } else {
+        cart.push({ name, price, image, quantity: 1 });
+      }
+
+      localStorage.setItem('cart', JSON.stringify(cart));
+      updateCartUI();
+      showToast(`${name} dimasukkan ke keranjang!`);
+    }
+
+    function updateCartUI() {
+      let cart = JSON.parse(localStorage.getItem('cart')) || [];
+      const badge = document.getElementById('cart-badge');
+      const cartList = document.getElementById('cart-items-list');
+      const totalPriceEl = document.getElementById('cart-total-price');
+      const formElement = document.getElementById('checkout-form-element');
+
+      let totalCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+      let totalPrice = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+
+      badge.textContent = totalCount;
+      totalPriceEl.textContent = formatRupiah(totalPrice);
+
+      if (cart.length === 0) {
+        cartList.innerHTML = '<p style="text-align:center; color:#999; margin: 30px 0;">Keranjang belanja kosong.</p>';
+        formElement.style.display = 'none';
+        return;
+      }
+
+      formElement.style.display = 'block';
+
+      cartList.innerHTML = cart.map((item, index) => `
+        <div class="cart-item">
+          <div class="cart-item-info">
+            <img src="${item.image}" alt="${item.name}">
+            <div class="cart-item-details">
+              <strong>${item.name}</strong>
+              <span>${formatRupiah(item.price)}</span>
+            </div>
+          </div>
+          <div class="cart-item-actions">
+            <button onclick="changeQuantity(${index}, -1)">-</button>
+            <span>${item.quantity}</span>
+            <button onclick="changeQuantity(${index}, 1)">+</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function changeQuantity(index, change) {
+      let cart = JSON.parse(localStorage.getItem('cart')) || [];
+      cart[index].quantity += change;
+
+      if (cart[index].quantity <= 0) {
+        cart.splice(index, 1);
+      }
+
+      localStorage.setItem('cart', JSON.stringify(cart));
+      updateCartUI();
+    }
+
+    function clearCart() {
+      localStorage.removeItem('cart');
+      updateCartUI();
+    }
+
+    function toggleCartModal() {
+      const modal = document.getElementById('cart-modal');
+      modal.classList.toggle('active');
+    }
+
+    function closeCartOnOverlay(event) {
+      if (event.target.id === 'cart-modal') {
+        toggleCartModal();
+      }
+    }
+
+    function triggerFormSubmit() {
+      let cart = JSON.parse(localStorage.getItem('cart')) || [];
+      if (cart.length === 0) {
+        alert('Keranjang belanja Anda masih kosong!');
+        return;
+      }
+      const form = document.getElementById('checkout-form-element');
+      if (form.reportValidity()) {
+        form.requestSubmit();
+      }
+    }
+
+    function processCheckout(event) {
+      event.preventDefault();
+
+      const name = document.getElementById('cust-name').value;
+      const address = document.getElementById('cust-address').value;
+      const notes = document.getElementById('cust-notes').value || 'Tidak ada';
+      const payment = document.getElementById('cust-payment').value;
+
+      alert(`✅ Pesanan Berhasil dibuat!\n\nNama: ${name}\nAlamat: ${address}\nMetode Pembayaran: ${payment}\nCatatan: ${notes}\n\nTerima kasih telah berbelanja di Brick Bandung City!`);
+
+      // Reset Keranjang & Form
+      clearCart();
+      document.getElementById('checkout-form-element').reset();
+      toggleCartModal();
+    }
+
+    let toastTimeout;
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      const toastMessage = document.getElementById('toast-message');
+
+      toastMessage.textContent = message;
+      toast.classList.add('show');
+
+      clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => {
+        toast.classList.remove('show');
+      }, 3000);
+    }
+
+    document.addEventListener('DOMContentLoaded', updateCartUI);
+  </script>
+</div>

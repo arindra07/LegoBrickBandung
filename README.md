@@ -1,0 +1,2 @@
+# LegoBrickBandung
+Ini Hanya Praktek

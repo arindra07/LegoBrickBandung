@@ -1,175 +1,249 @@
 /* =========================
-   RESET
+   RESET & BASE
    ========================= */
-
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-
-/* =========================
-   BODY
-   ========================= */
-
-body {
-    font-family: Arial, sans-serif;
-    background-color: #F5EBDD;
-    color: #333;
+html {
+    scroll-behavior: smooth;
 }
 
+body {
+    font-family: 'Plus Jakarta Sans', 'Segoe UI', Arial, sans-serif;
+    background-color: #F5EBDD;
+    color: #2d3436;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* =========================
+   MENU NAVIGASI (PALING ATAS)
+   ========================= */
+.top-navbar {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background: rgba(255, 255, 255, 0.88);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255, 157, 80, 0.25);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.nav-container {
+    max-width: 1150px;
+    margin: 0 auto;
+    padding: 12px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.nav-brand {
+    text-decoration: none;
+    font-weight: 800;
+    font-size: 18px;
+    color: #1e3a5f;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    letter-spacing: 0.5px;
+    transition: transform 0.2s ease;
+}
+
+.nav-brand:hover {
+    transform: scale(1.02);
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.nav-links a {
+    color: #4a5568;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+    padding: 9px 18px;
+    border-radius: 50px;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.nav-links a:hover {
+    background-color: rgba(255, 157, 80, 0.18);
+    color: #e66b19;
+    transform: translateY(-1px);
+}
+
+.nav-links a.active {
+    background: linear-gradient(135deg, #FF9D50, #ff7315);
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(255, 115, 21, 0.35);
+}
 
 /* =========================
    HEADER
    ========================= */
-
 header {
-    background-color: #FF9D50;
+    background: linear-gradient(135deg, #FF9D50 0%, #ff7b29 100%);
     color: #FFF9D8;
-
     text-align: center;
+    padding: 38px 20px 55px 20px;
+    position: relative;
+    overflow: hidden;
+}
 
-    padding: 30px;
+.header-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.header-badge {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.2);
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 5px 14px;
+    border-radius: 50px;
+    margin-bottom: 10px;
+    letter-spacing: 0.5px;
 }
 
 header h1 {
-    margin-bottom: 5px;
-    font-size: 32px;
+    margin-bottom: 6px;
+    font-size: 34px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
 }
 
 header p {
-    font-size: 16px;
+    font-size: 15px;
+    opacity: 0.95;
+    font-weight: 500;
 }
-
 
 /* =========================
-   MENU NAVIGASI
+   AREA KONTEN & IFRAME
    ========================= */
-
-nav {
-    background-color: #F5EBDD;;
-
-    text-align: center;
-
-    padding: 10px;
-}
-
-nav a {
-    display: inline-block;
-
-    color: black;
-    text-decoration: none;
-
-    padding: 12px 25px;
-
-    margin: 3px;
-
-    border-radius: 5px;
-
-    transition: 0.3s;
-}
-
-
-/* Saat mouse diarahkan ke menu */
-
-nav a:hover {
-    background-color: #FF9D50;
-}
-
-
-/* =========================
-   AREA KONTEN
-   ========================= */
-
 main {
-    width: 90%;
-
-    margin: 25px auto;
-
-    background-color: white;
-
+    width: 92%;
+    max-width: 1150px;
+    margin: 40px auto 40px auto; /* Jarak atas dan bawah dari header/footer dibuat lebih lega & rapi */
+    background-color: #ffffff;
     padding: 20px;
-
-    border-radius: 10px;
-
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 18px;
+    box-shadow: 0 12px 35px rgba(30, 58, 95, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    flex-grow: 1;
+    z-index: 10;
 }
 
-main h2 {
-    text-align: center;
-
-    margin-bottom: 20px;
-
-    color: #1e3a5f;
+.iframe-wrapper {
+    width: 100%;
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: #ffffff;
 }
-
-
-/* =========================
-   IFRAME
-   ========================= */
 
 iframe {
     width: 100%;
-
-    height: 500px;
-
-    border: 2px solid #1e3a5f;
-
-    border-radius: 8px;
-
-    background-color: white;
+    height: 600px;
+    border: none;
+    display: block;
+    background-color: #ffffff;
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.28s ease, transform 0.28s ease;
 }
 
+iframe.fade-out {
+    opacity: 0;
+    transform: translateY(8px);
+}
 
 /* =========================
    FOOTER
    ========================= */
-
 footer {
     background-color: #FF9D50;
-
-    color: white;
-
+    color: #ffffff;
     text-align: center;
-
-    padding: 20px;
-
-    margin-top: 20px;
+    padding: 22px 15px;
+    margin-top: auto;
+    font-size: 14px;
 }
 
 footer p {
-    margin: 0;
+    margin-bottom: 6px;
+    font-weight: 600;
 }
 
+footer a {
+    color: #FFF9D8;
+    text-decoration: none;
+    font-size: 13px;
+    border-bottom: 1px dashed #FFF9D8;
+    padding-bottom: 2px;
+    transition: opacity 0.2s;
+}
+
+footer a:hover {
+    opacity: 0.8;
+}
 
 /* =========================
    RESPONSIVE
    ========================= */
+@media screen and (max-width: 768px) {
+    .nav-container {
+        justify-content: center;
+        padding: 10px 15px;
+    }
 
-@media screen and (max-width: 600px) {
+    .nav-links {
+        justify-content: center;
+    }
+
+    .nav-links a {
+        padding: 7px 13px;
+        font-size: 13px;
+    }
+
+    header {
+        padding: 28px 15px 45px 15px;
+    }
 
     header h1 {
         font-size: 24px;
     }
 
-    nav a {
-        display: block;
-
-        margin: 5px 20px;
-    }
-
     main {
         width: 95%;
+        padding: 10px;
+        margin: 25px auto;
     }
 
     iframe {
-        height: 400px;
+        height: 520px;
     }
 }
 
+/* =========================
+   STYLING HALAMAN PROFILE
+   ========================= */
 .profile-container {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Plus Jakarta Sans', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   color: #333;
   padding: 10px;
 }
@@ -196,7 +270,6 @@ footer p {
   opacity: 0.9;
 }
 
-/* Section Statistik / Angka Penting */
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -249,7 +322,6 @@ footer p {
   font-weight: 600;
 }
 
-/* Detail Narasi */
 .profile-details {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));

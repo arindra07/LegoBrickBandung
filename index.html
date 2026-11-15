@@ -1,6 +1,14 @@
-<html>
+<!DOCTYPE html>
+<html lang="id">
 <head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>LEGO BRICK BANDUNG</title>
+
+	<!-- Google Font Modern -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 	<!-- Menghubungkan CSS -->
 	<link rel="stylesheet" href="style.css">
@@ -8,38 +16,72 @@
 </head>
 
 <body>
-<link rel="icon" type="image/png" href="logo.png">
-	<!--HEADER-->
-	<header>
-		<h1> LEGO BRICK BANDUNG </h1>
-		<p> Penjualan Lego terbaik di Bandung </p>
-	</header>
-	<!--MENU NAVIGASI-->
-	<nav>
-	    <a href="home.html" target="konten">Home</a>
-	    <a href="profile.html" target="konten">Profile</a>
-	    <a href="products.html" target="konten">Products</a>
-	    <a href="distributor.html" target="konten">Distributor</a>
-	    <a href="kontak.html" target="konten">Kontak</a>
+	<!-- MENU NAVIGASI PALING ATAS (STICKY) -->
+	<nav class="top-navbar">
+		<div class="nav-container">
+			<a href="home (1).html" target="konten" class="nav-brand" onclick="setActiveNav(this)">
+				🧱 <span>BRICK BANDUNG</span>
+			</a>
+			
+			<div class="nav-links">
+				<a href="home (1).html" target="konten" class="active" onclick="setActiveNav(this)">Home</a>
+				<a href="profile.html" target="konten" onclick="setActiveNav(this)">Profile</a>
+				<a href="products.html" target="konten" onclick="setActiveNav(this)">Products</a>
+				<a href="distributor.html" target="konten" onclick="setActiveNav(this)">Distributor</a>
+				<a href="kontak.html" target="konten" onclick="setActiveNav(this)">Kontak</a>
+			</div>
+		</div>
 	</nav>
 
-	<!--KONTEN-->
+	<!-- HEADER -->
+	<header>
+		<div class="header-content">
+			<span class="header-badge">✨ Toko LEGO® Resmi & Terlengkap</span>
+			<h1>LEGO BRICK BANDUNG</h1>
+			<p>Pusat koleksi dan penjualan Lego terbaik di Kota Bandung</p>
+		</div>
+	</header>
+
+	<!-- KONTEN -->
 	<main>
-	
-		<h2> Area Konten </h2>
-
-		<iframe
-		      src="home.html"
-		      name="konten"
-		      title="Area Konten">
-		</iframe>
-
+		<div class="iframe-wrapper">
+			<iframe
+				id="content-frame"
+				src="home (1).html"
+				name="konten"
+				title="Area Konten"
+				onload="frameLoaded()">
+			</iframe>
+		</div>
 	</main>
 
-	<!--FOOTER-->
+	<!-- FOOTER -->
 	<footer>
-		<p>LEGO® BRICK BANDUNG</p>
-		<a href="sumber.html" target="blank">sumber</a>
+		<p>&copy; 2026 LEGO® BRICK BANDUNG. All rights reserved.</p>
+		<a href="sumber.html" target="_blank">Referensi & Sumber Gambar</a>
 	</footer>
+
+	<!-- SCRIPT UNTUK ANIMASI PINDAH HALAMAN & MENU AKTIF -->
+	<script>
+		const iframe = document.getElementById('content-frame');
+
+		function setActiveNav(element) {
+			// Ubah status active pada tombol menu
+			document.querySelectorAll('.nav-links a').forEach(link => {
+				link.classList.remove('active');
+			});
+			if (element) {
+				element.classList.add('active');
+			}
+
+			// Efek fade-out halus sebelum halaman baru dimuat
+			iframe.classList.add('fade-out');
+		}
+
+		function frameLoaded() {
+			// Efek fade-in halus saat halaman selesai dimuat
+			iframe.classList.remove('fade-out');
+		}
+	</script>
 </body>
 </html>
